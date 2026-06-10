@@ -20,7 +20,7 @@ function processGraph(input) {
     const normalized = typeof entry === "string" ? entry.trim() : "";
 
     if (!EDGE_PATTERN.test(normalized) || normalized[0] === normalized[3]) {
-      invalidEntries.push(typeof entry === "string" ? entry : String(entry ?? ""));
+      invalidEntries.push(typeof entry === "string" ? normalized : String(entry ?? ""));
       continue;
     }
 
@@ -49,11 +49,10 @@ function processGraph(input) {
   const acceptedEdges = [];
 
   for (const [parent, child] of uniqueEdges) {
-    registerNode(parent);
-    registerNode(child);
-
     if (parentOf.has(child)) continue;
 
+    registerNode(parent);
+    registerNode(child);
     parentOf.set(child, parent);
     acceptedEdges.push([parent, child]);
   }

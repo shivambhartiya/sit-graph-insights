@@ -36,17 +36,16 @@ test("trims valid edges and reports each duplicate only once", () => {
 });
 
 test("rejects malformed values and self-loops", () => {
-  const entries = ["", "a->B", "AB->C", "A-B", "A->", "A->A", null, 12];
+  const entries = ["", " a->B ", "AB->C", "A-B", "A->", "A->A", null, 12];
   assert.deepEqual(processGraph(entries).invalid_entries, [
     "", "a->B", "AB->C", "A-B", "A->", "A->A", "", "12",
   ]);
 });
 
-test("keeps the first parent and preserves the discarded parent as a standalone node", () => {
+test("silently discards later parent edges", () => {
   const result = processGraph(["A->D", "B->D"]);
   assert.deepEqual(result.hierarchies, [
     { root: "A", tree: { A: { D: {} } }, depth: 2 },
-    { root: "B", tree: { B: {} }, depth: 1 },
   ]);
 });
 
@@ -63,4 +62,30 @@ test("handles an empty graph", () => {
     total_cycles: 0,
     largest_tree_root: "",
   });
+});
+
+test("uses the smallest node as the root of a pure cycle", () => {
+  const result = processGraph(["C->A", "A->B", "B->C"]);
+  assert.deepEqual(result.hierarchies, [
+    { root: "A", tree: {}, has_cycle: true },
+  ]);
+});
+
+test("detects a cycle with outgoing branches", () => {
+  const result = processGraph(["A->B", "B->A", "B->C"]);
+  assert.deepEqual(result.hierarchies, [
+    { root: "A", tree: {}, has_cycle: true },
+  ]);
+});
+
+test("handles 50 entries quickly", () => {
+  const edges = Array.from({ length: 50 }, (_, index) =>
+    index % 2 === 0 ? "A->B" : " B->C ",
+  );
+  const startedAt = performance.now();
+  const result = processGraph(edges);
+
+  assert.ok(performance.now() - startedAt < 100);
+  assert.deepEqual(result.duplicate_edges, ["A->B", "B->C"]);
+  assert.equal(result.summary.total_trees, 1);
 });
