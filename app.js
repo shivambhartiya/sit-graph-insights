@@ -62,7 +62,7 @@ function showResult(data) {
     return `
       <div class="hierarchy">
         <h3>Root: ${escapeHtml(hierarchy.root)} (${detail})</h3>
-        <pre>${escapeHtml(JSON.stringify(hierarchy.tree, null, 2))}</pre>
+        <pre>${escapeHtml(JSON.stringify(hierarchy.tree))}</pre>
       </div>
     `;
   }).join("");
