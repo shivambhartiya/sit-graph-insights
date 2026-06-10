@@ -3,66 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Explore graph hierarchies, cycles, duplicates, and invalid edges." />
-    <title>Graph Insights | SIT Challenge</title>
+    <title>Graph Hierarchy Analyzer</title>
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
     <main>
-      <header class="hero">
-        <div>
-          <p class="eyebrow">SIT Full Stack Challenge</p>
-          <h1>Graph Hierarchy Analyzer</h1>
-          <p class="intro">
-            Enter graph edges to validate relationships, detect cycles, and build hierarchy trees.
-          </p>
+      <h1>Graph Hierarchy Analyzer</h1>
+      <p>Enter edges to build hierarchy trees and detect invalid entries, duplicates, and cycles.</p>
+      <p class="endpoint">API: <code>POST /api/graph</code></p>
+
+      <form id="graph-form">
+        <label for="edges">Graph edges</label>
+        <textarea id="edges" spellcheck="false" placeholder="A->B&#10;A->C&#10;B->D"></textarea>
+        <p class="help">Use one edge per line or separate edges with commas. Format: <code>X-&gt;Y</code>.</p>
+
+        <div class="actions">
+          <button type="submit">Analyze</button>
+          <button type="button" id="load-example">Load example</button>
+          <span id="edge-count">0 entries</span>
         </div>
-        <div class="api-chip">
-          <div><small>API endpoint</small><strong>POST /api/graph</strong></div>
-        </div>
-      </header>
+        <p id="error" class="error" role="alert"></p>
+      </form>
 
-      <section class="workspace">
-        <form class="input-panel" id="graph-form">
-          <div class="panel-heading">
-            <div>
-              <p class="section-number">01 / Input</p>
-              <h2>Define your graph</h2>
-            </div>
-            <button class="text-button" type="button" id="load-example">Load example</button>
-          </div>
-
-          <label for="edges">One edge per line or comma-separated</label>
-          <textarea id="edges" spellcheck="false" placeholder="A->B&#10;A->C&#10;B->D"></textarea>
-          <div class="hint-row">
-            <span>Format: uppercase <code>X-&gt;Y</code></span>
-            <span id="edge-count">0 entries</span>
-          </div>
-          <button class="submit-button" type="submit">
-            <span>Analyze graph</span><span aria-hidden="true">→</span>
-          </button>
-          <p class="error" id="error" role="alert"></p>
-        </form>
-
-        <section class="result-panel" aria-live="polite">
-          <div class="panel-heading">
-            <div>
-              <p class="section-number">02 / Output</p>
-              <h2>Graph insights</h2>
-            </div>
-            <span class="status" id="status">Ready</span>
-          </div>
-
-          <div id="empty-state" class="empty-state">
-            <h3>Your hierarchy will appear here</h3>
-            <p>Enter a graph and run the analysis to see structured results.</p>
-          </div>
-          <div id="results" class="results" hidden></div>
-        </section>
+      <section class="output" aria-live="polite">
+        <h2>Result <small id="status">Ready</small></h2>
+        <p id="empty-state">Submit graph edges to view the result.</p>
+        <div id="results" hidden></div>
       </section>
     </main>
 
-    <footer>Built by Shivam Bhartiya</footer>
     <script src="/app.js" defer></script>
   </body>
 </html>

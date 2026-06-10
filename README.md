@@ -1,6 +1,6 @@
-# Graph Insights
+# Graph Hierarchy Analyzer
 
-A full-stack Node.js solution for the SIT Round 1 engineering challenge. It exposes a fast graph-processing REST API and a responsive frontend for exploring hierarchy results.
+A Node.js solution for the SIT Round 1 engineering challenge. It includes the required graph-processing API and a simple frontend.
 
 ## Run locally
 
@@ -28,4 +28,4 @@ The API validates entries, removes duplicate edges, applies first-parent-wins be
 npm test
 ```
 
-The implementation uses only Node.js built-ins. Graph processing runs in O(V + E) time and uses encounter order for stable output.
+The implementation uses only Node.js built-ins. Graph processing runs in O(V + E) time.
