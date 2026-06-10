@@ -1,11 +1,5 @@
 "use strict";
 
-const exampleEdges = [
-  "A->B", "A->C", "B->D", "C->E", "E->F",
-  "X->Y", "Y->Z", "Z->X", "P->Q", "Q->R",
-  "G->H", "G->H", "G->I", "hello", "1->2", "A->",
-];
-
 const form = document.querySelector("#graph-form");
 const input = document.querySelector("#edges");
 const count = document.querySelector("#edge-count");
@@ -13,11 +7,6 @@ const error = document.querySelector("#error");
 const status = document.querySelector("#status");
 const emptyState = document.querySelector("#empty-state");
 const results = document.querySelector("#results");
-
-document.querySelector("#load-example").addEventListener("click", () => {
-  input.value = exampleEdges.join("\n");
-  updateCount();
-});
 
 input.addEventListener("input", updateCount);
 
