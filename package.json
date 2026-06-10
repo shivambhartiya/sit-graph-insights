@@ -1,0 +1,14 @@
+{
+  "name": "sit-graph-insights",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SIT Round 1 full stack graph hierarchy challenge",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
